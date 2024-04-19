@@ -1,0 +1,296 @@
+#:import CoreImage kivy.core.image.Image
+#:import BytesIO io.BytesIO
+<IconListItem>
+    IconLeftWidget:
+        icon: root.icon
+
+
+WindowManager:
+    MainWindow:
+    SingleWindow:
+        id: single_window
+    MultibleWindow
+        id: multible_window
+    Content:
+        id: dia_content
+    MultiblePreview
+        id: multible_preview_content
+
+<MainWindow>:
+    name: "main"
+    FloatLayout
+        size_hint: 1, 1
+        pos_hint: {"x": 0.1,"y": 0.3}
+        Image:
+            size_hint: 0.4, None
+            pos_hint: {"center_x": 0.4,"y": 0.25}
+            source: 'assets/logo.png'
+        MDLabel:
+            text: "[color=EDB52B]Welcome To\n[/color][font=Lexend][color=0A3C93][size=24]Certificate Generator System[/size][/color][/font]"
+            font_name: "Montserrat-Medium"
+            font_size: 18
+            halign: 'center'
+            valign: 'top'
+            markup:True
+        MDRaisedButton:
+            size_hint: 0.8, 0.05
+            pos_hint: {"x": 0,"y": 0.07}
+            font_name: "Lexend"
+            font_size:22
+            text: "Generate Single Certificate"
+            theme_text_color: "Custom"
+            text_color: 1, 1, 1, 1
+            md_bg_color: 0.04, 0.24, 0.57, 1
+            on_release:
+                app.root.current = "single"
+                root.manager.transition.direction = "left"
+        MDRaisedButton:
+            size_hint: 0.8, 0.05
+            pos_hint: {"x": 0,"y": 0}
+            font_name: "Lexend"
+            font_size:22
+            md_bg_color: 0.04, 0.24, 0.57, 1
+            text: "Generate Multible Certificates"
+            on_release:
+                app.root.current = "multible"
+                root.manager.transition.direction = "left"
+
+<SingleWindow>:
+    name: "single"
+    MDGridLayout:
+        rows:6
+        adaptive_height: True
+        size_hint: 0.7, None
+        pos_hint: {"x": 0.15,"y": (0.3 - ((cert_txt.height - 54) / 1000 ))}
+        MDRectangleFlatIconButton:
+            id: cert_type
+            size_hint: 1, None
+            icon: "arrow-down-drop-circle"
+            # size: 3 * dp(48), dp(48)
+            text: 'Choose Certficate Type'
+            font_name: "Lexend"
+            opposite_colors: True
+            # pos_hint: {'center_x': .5, 'center_y': .5}
+            on_release: app.menu.open()
+        MDTextField:
+            id: holder_name
+            hint_text: "Enter Certificate Holder Name"
+            helper_text: "Enter Full Name"
+            helper_text_mode: "on_focus"
+            opposite_colors: True
+            text_color: [10 /255, 60/255, 147/255, 1]
+            font_name: "Lexend"
+            font_name_hint_text:'Lexend'
+        MDBoxLayout:
+            orientation: 'horizontal'
+            size_hint: 1, None
+            adaptive_height: True
+            # md_bg_color: app.theme_cls.primary_color
+
+            MDTextField:
+                id: date_field
+                hint_text: "Select Certficate Date"
+                helper_text: "Click On Calendar Icon Please"
+                helper_text_mode: "on_focus"
+                font_name: "Lexend"
+                text_color: [10 /255, 60/255, 147/255, 1]
+                font_name_hint_text:'Lexend'
+            MDIconButton:
+                icon: "calendar"
+                ripple_scale: .5
+                pos: date_field.width - self.width + dp(8), 0
+                on_release: app.show_date_picker()
+
+        MDTextField:
+            id: cert_txt
+            hint_text: "Certificate Main Text"
+            helper_text: "in no more than 210 character"
+            helper_text_mode: "on_focus"
+            font_name: "Lexend"
+            font_name_hint_text:'Lexend'
+            text_color: [10 /255, 60/255, 147/255, 1]
+            max_text_length: 210
+            multiline: True
+            max_height: "300dp"
+            height: "300dp"
+            # pos_hint: {"center_x": .5, "center_y": .5}
+        MDTextField:
+            id: cert_txt_optional
+            hint_text: "Certificate Other Text"
+            helper_text: "in no more than 500 character"
+            helper_text_mode: "on_focus"
+            font_name: "Lexend"
+            font_name_hint_text:'Lexend'
+            text_color: [10 /255, 60/255, 147/255, 1]
+            max_text_length: 500
+            multiline: True
+            max_height: "300dp"
+            height: "300dp"
+            # pos_hint: {"center_x": .5, "center_y": .5}
+        MDRaisedButton:
+            text: "Preview"
+            size_hint: 1, None
+            font_name: "Lexend"
+            on_release:
+                print(cert_txt.height)
+                app.go_to_preview_screen()
+
+
+<MultibleWindow>
+    name: "multible"
+    MDGridLayout:
+        rows:6
+        adaptive_height: True
+        size_hint: 0.7, None
+        pos_hint: {"x": 0.15,"y": (0.3 - ((multi_cert_txt.height - 54) / 1000 ))}
+        MDRectangleFlatIconButton:
+            id: multi_cert_type
+            size_hint: 1, None
+            icon: "arrow-down-drop-circle"
+            # size: 3 * dp(48), dp(48)
+            text: 'Choose Certficate Type'
+            font_name: "Lexend"
+            opposite_colors: True
+            # pos_hint: {'center_x': .5, 'center_y': .5}
+            on_release: app.menu2.open()
+        MDBoxLayout:
+            orientation: 'horizontal'
+            size_hint: 1, None
+            adaptive_height: True
+            # md_bg_color: app.theme_cls.primary_color
+
+            MDTextField:
+                id: file_path
+                hint_text: "Select XLSX File"
+                # helper_text: "Click On File Icon Please"
+                helper_text_mode: "on_focus"
+                disabled: 'True'
+                on_double_tap: app.file_manager_open()
+                font_name: "Lexend"
+                text_color: [10 /255, 60/255, 147/255, 1]
+                font_name_hint_text:'Lexend'
+            MDIconButton:
+                icon: "file"
+                ripple_scale: .5
+                pos: multi_date_field.width - self.width + dp(8), 0
+                on_release: app.file_manager_open()
+        MDBoxLayout:
+            orientation: 'horizontal'
+            size_hint: 1, None
+            adaptive_height: True
+            # md_bg_color: app.theme_cls.primary_color
+
+            MDTextField:
+                id: multi_date_field
+                hint_text: "Select Certficate Date"
+                helper_text: "Click On Calendar Icon Please"
+                helper_text_mode: "on_focus"
+                font_name: "Lexend"
+                text_color: [10 /255, 60/255, 147/255, 1]
+                font_name_hint_text:'Lexend'
+            MDIconButton:
+                icon: "calendar"
+                ripple_scale: .5
+                pos: multi_date_field.width - self.width + dp(8), 0
+                on_release: app.show_date_picker()
+
+        MDTextField:
+            id: multi_cert_txt
+            hint_text: "Certificate Main Text"
+            helper_text: "in no more than 210 character"
+            helper_text_mode: "on_focus"
+            font_name: "Lexend"
+            font_name_hint_text:'Lexend'
+            text_color: [10 /255, 60/255, 147/255, 1]
+            max_text_length: 210
+            multiline: True
+            max_height: "300dp"
+            height: "300dp"
+            # pos_hint: {"center_x": .5, "center_y": .5}
+        MDTextField:
+            id: multi_cert_txt_optional
+            hint_text: "Certificate Other Text"
+            helper_text: "in no more than 500 character"
+            helper_text_mode: "on_focus"
+            font_name: "Lexend"
+            font_name_hint_text:'Lexend'
+            text_color: [10 /255, 60/255, 147/255, 1]
+            max_text_length: 500
+            multiline: True
+            max_height: "300dp"
+            height: "300dp"
+            # pos_hint: {"center_x": .5, "center_y": .5}
+        MDRaisedButton:
+            text: "Preview"
+            size_hint: 1, None
+            font_name: "Lexend"
+            on_release:
+                print(multi_cert_txt.height)
+                app.go_to_preview_screen_from_multi()
+
+
+<Content>
+    name: "preview"
+    # size_hint_y: None
+    size_hint: 1, 1
+    # height: "250dp"
+    # width: "400dp"
+
+    Image:
+        id: img3
+        pos_hint: {"x": 0, 'y': 0}
+        size_hint: 1, 1
+        width: "700dp"
+        # source: app.getSource()
+        texture: app.cert_image.texture
+        on_texture:
+            print("hiiih")
+            # img3.texture = app.cert_image.texture
+        allow_stretch: True
+    MDBoxLayout:
+        size_hint: 1,1
+        spacing: 20
+        MDRaisedButton:
+            text: "Back"
+            size_hint: 1, None
+            font_name: "Lexend"
+            on_release:
+                # print(cert_txt.height)
+                app.root.current = "single"
+                root.manager.transition.direction = "right"
+        MDRaisedButton:
+            text: "Export"
+            size_hint: 1, None
+            font_name: "Lexend"
+            on_release:
+                # print(cert_txt.height)
+                app.exportCertificate()
+
+<MultiblePreview>
+    name: "multible_preview"
+    # size_hint_y: None
+    size_hint: 1, 1
+    # height: "250dp"
+    # width: "400dp"
+
+    MDCarousel:
+        id: carousel
+
+    MDBoxLayout:
+        size_hint: 1,1
+        spacing: 20
+        MDRaisedButton:
+            text: "Back"
+            size_hint: 1, None
+            font_name: "Lexend"
+            on_release:
+                # print(cert_txt.height)
+                app.root.current = "multible"
+                root.manager.transition.direction = "right"
+        MDRaisedButton:
+            text: "Export"
+            size_hint: 1, None
+            font_name: "Lexend"
+            on_release:
+                # print(cert_txt.height)
+                app.exportCertificates()

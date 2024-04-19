@@ -1,0 +1,88 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Kivy generated files
+.kivy/
+.kivy_logs/
+
+# KivyMD generated files
+.kivymd/
+
+# Android build files
+/build/
+/bin/
+/gen/
+/local.properties
+/local.properties
+/.externalNativeBuild
+/captures/
+
+# iOS build files
+/.idea/
+/.gradle/
+/.cxx/
+/.build/
+/.DS_Store
+/*.xcodeproj/
+/*.xcworkspace/
+/*.plist
+/*.ipa
+/*.iml
+/*.app
+
+dist/
+exported/*.pdf
+
+# PyCharm files
+/.idea/
+*.iml
+*.iws
+*.ipr
+
+# Virtual environment
+venv/
+.env/
+ENV/
+kivy_venv/
+
+# Compiled files
+*.pyc
+*.pyo
+*.pyd
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Thumbnails
+._*
+
+# Windows thumbnail cache files
+Thumbs.db
+ehthumbs.db
+
+# Windows Installer files
+*.cab
+*.msi
+*.msm
+*.msp
+
+# Windows shortcuts
+*.lnk
+
+# Visual Studio files
+.vscode/
+
+# Sublime Text files
+*.sublime-workspace
+*.sublime-project
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# IPython
+profile_default/
+ipython_config.py
