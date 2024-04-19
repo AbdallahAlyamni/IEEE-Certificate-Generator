@@ -16,7 +16,7 @@ from kivymd.toast import toast
 from kivy.properties import StringProperty
 from kivymd.uix.list import OneLineIconListItem
 from kivy.metrics import dp
-from kivymd.uix.picker import MDDatePicker
+from kivymd.uix.pickers import MDDatePicker
 from kivymd.uix.filemanager import MDFileManager
 from kivymd.uix.button import MDFlatButton
 from kivymd.uix.dialog import MDDialog
@@ -26,6 +26,7 @@ from theme import Theme
 from kivy.cache import Cache
 from kivy.properties import ObjectProperty
 import pandas as pd
+from datetime import datetime
 
 from certs import Generate
 
@@ -66,6 +67,7 @@ class MyMainApp(MDApp):
     cert_type = ""
     cert_date = ""
     cert_txt = ""
+    current_year = str(datetime.now().year)
 
     multi_cert_file_path = ""
     multi_cert_textures = []
@@ -231,9 +233,9 @@ class MyMainApp(MDApp):
         print(value.strftime('%d %b %Y'))
         temp = value.strftime('%d %b %Y').upper()
         self.screen.ids.single_window.ids.date_field.set_text(
-            self, temp[:temp.index('2021')])
+            self, temp[:temp.index(self.current_year)])
         self.screen.ids.multible_window.ids.multi_date_field.set_text(
-            self, temp[:temp.index('2021')])
+            self, temp[:temp.index(self.current_year)])
 
     def on_cancel(self, instance, value):
         '''Events called when the "CANCEL" dialog box button is clicked.'''
